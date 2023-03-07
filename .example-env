@@ -1,0 +1,6 @@
+X_LOGIN_URL=https://www.noip.com/login
+X_MAIN_URL=https://my.noip.com/
+X_CONFIRM_URL=https://my.noip.com/dynamic-dns
+X_USERNAME=username
+X_PASSWORD=password
+X_DEFAULT_INTERVAL=5

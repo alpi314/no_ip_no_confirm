@@ -1,2 +1,5 @@
 # editor files
 .vscode
+
+# environment variables
+.env
