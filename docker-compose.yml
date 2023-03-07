@@ -1,0 +1,8 @@
+services:
+  no-ip-cron:
+    image: no_ip_no_confirm
+    container_name: no-ip-cron
+    restart: always
+    env_file:
+      - .env
+    
