@@ -53,6 +53,7 @@ user_agents = [
 options.add_argument(f"user-agent={choice(user_agents)}")
 options.add_argument("lang=en-GB;q=0.9,en;q=0.8,en-US;q=0.7,sl;q=0.6")
 options.add_argument("accept_encoding=gzip, deflate, br")
+options.add_argument('--headless')
 options.add_experimental_option('excludeSwitches', ['enable-logging'])
 
 def main():

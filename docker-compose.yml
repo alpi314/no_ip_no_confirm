@@ -1,8 +1,6 @@
+version: '3'
 services:
-  no-ip-cron:
+  no-ip-no-confirm:
     image: no_ip_no_confirm
-    container_name: no-ip-cron
-    restart: always
-    env_file:
-      - .env
-    
+    container_name: no-ip-no-confirm
+    network_mode: host
