@@ -1,6 +1,6 @@
 version: '3'
 services:
   no-ip-no-confirm:
+    build: .
     image: no_ip_no_confirm
-    container_name: no-ip-no-confirm
     network_mode: host
