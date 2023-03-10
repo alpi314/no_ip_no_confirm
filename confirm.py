@@ -24,6 +24,9 @@ def extract_remaining_days(confirm_buttons):
 
     for cb in confirm_buttons:
         countdown = cb.get_attribute("data-original-title")
+        if countdown is None:
+            countdown = cb.text
+        print("Countdown text:", countdown)
         remaining = int(countdown.split(" ")[2])
         least_remaining = min(least_remaining, remaining)
 
@@ -31,6 +34,15 @@ def extract_remaining_days(confirm_buttons):
         least_remaining = default_interval
     
     return least_remaining
+
+def confirm_if_needed(confirm_buttons):
+    for button in confirm_buttons:
+        print("Confirm text:", button.text)
+        if button.text.replace(" ", "").replace("\n", "").lower() == "confirm":
+            print("Confirming... ", end="")
+            button.click()
+            print(" ...Confirmed")
+        sleep_randomly(5)
 
 # load environment variables
 load_dotenv()
@@ -95,7 +107,7 @@ def main():
     confirm_buttons = []
     try:
         confirm_buttons = WebDriverWait(driver, 15).until(EC.presence_of_all_elements_located((By.CSS_SELECTOR, "td[data-title='Host'] div:nth-child(2) a")))
-        print("Found", len(confirm_buttons), "confirm buttons")
+        print("Found", len(confirm_buttons), "countdown markers")
     except TimeoutException:
         print("Timed out waiting for confirm buttons")
 
@@ -103,6 +115,13 @@ def main():
     remaining_days = extract_remaining_days(confirm_buttons)
     sleep_randomly(5)
 
+    # extract the potentail confirm buttons
+    confirm_buttons = driver.find_elements(By.CSS_SELECTOR, "#host-panel > table tbody tr td:last-child button:first-child")
+    print("Found", len(confirm_buttons), "confirm buttons")
+
+    # confirm if needed
+    confirm_if_needed(confirm_buttons)
+ 
     return remaining_days
 
 if __name__ == "__main__":
@@ -110,6 +129,6 @@ if __name__ == "__main__":
         print("Starting task")
         remaining_days = main()
         print("Completed task")
-        print("Sleeping for", remaining_days, "days")
-        time.sleep(remaining_days * 24 * 60 * 60)
+        print("Sleeping for", remaining_days - 1, "days")
+        time.sleep((remaining_days - 1) * 24 * 60 * 60)
         print("--------------------")
